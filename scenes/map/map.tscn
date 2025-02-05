@@ -1,0 +1,79 @@
+[gd_scene load_steps=9 format=4 uid="uid://bhyuatx5vhb8o"]
+
+[ext_resource type="Script" uid="uid://cyaiga1g23tjk" path="res://scenes/map/map.gd" id="1_4es15"]
+[ext_resource type="Script" uid="uid://bbd5wrgetshb7" path="res://scenes/map/tilemap_layer_manager.gd" id="2_tgmy8"]
+[ext_resource type="Texture2D" uid="uid://docqwvajudaeu" path="res://assets/tilesets/tileset_layer0.svg" id="3_ohh4l"]
+[ext_resource type="Texture2D" uid="uid://cktdkfv1pv361" path="res://assets/tilesets/tileset_layer1.svg" id="4_56bkq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oyaw7"]
+texture = ExtResource("3_ohh4l")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_d0g2h"]
+tile_size = Vector2i(256, 256)
+sources/0 = SubResource("TileSetAtlasSource_oyaw7")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_syjsj"]
+texture = ExtResource("4_56bkq")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_jqr3o"]
+tile_size = Vector2i(256, 256)
+sources/0 = SubResource("TileSetAtlasSource_syjsj")
+
+[node name="Environment" type="Node2D"]
+script = ExtResource("1_4es15")
+
+[node name="TilemapLayerManager" type="Node2D" parent="."]
+script = ExtResource("2_tgmy8")
+
+[node name="TilemapLayer0" type="TileMapLayer" parent="TilemapLayerManager"]
+tile_set = SubResource("TileSet_d0g2h")
+
+[node name="TilemapLayer1" type="TileMapLayer" parent="TilemapLayerManager"]
+tile_map_data = PackedByteArray("AAABAAEAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAEAAAAAAAEAAAACAAEAAAAAAAEAAAACAAAAAAAAAAEAAAABAAAAAAAAAAEAAAADAAAAAAAAAAEAAAAEAAAAAAAAAAEAAAAFAAEAAAAAAAEAAAAFAAIAAAAAAAEAAAAEAAIAAAAAAAEAAAADAAIAAAAAAAEAAAACAAIAAAAAAAEAAAABAAIAAAAAAAEAAAAAAAIAAAAAAAEAAAADAAEAAAAAAAEAAAAEAAEAAAAAAAEAAAAFAAAAAAAAAAEAAAAGAAAAAAAAAAEAAAAGAAEAAAAAAAEAAAAGAAIAAAAAAAEAAAAGAAMAAAAAAAEAAAAFAAMAAAAAAAEAAAAEAAMAAAAAAAEAAAADAAMAAAAAAAEAAAACAAMAAAAAAAEAAAABAAMAAAAAAAEAAAAAAAMAAAAAAAEAAAA=")
+tile_set = SubResource("TileSet_jqr3o")

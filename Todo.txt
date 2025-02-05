@@ -1,0 +1,16 @@
+Sleeping diamond :
+	Mercenaire
+	Mineur
+	Marchand
+	Conquérant
+	Fermier
+
+UI Button :
+	- Harvest
+	- Chop
+	- Cut Planys
+	- Allow
+	- Mine
+	- Hunt
+	- Deconstruct
+	- Cancel

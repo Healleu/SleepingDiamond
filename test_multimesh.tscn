@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckkfx6tudless"]
+
+[ext_resource type="Texture2D" uid="uid://cncaxmp1vqg5q" path="res://icon.svg" id="1_hjic7"]
+[ext_resource type="Script" uid="uid://cx8h1cmtkjcjs" path="res://scenes/multi_mesh_instance_2d.gd" id="2_046ha"]
+
+[sub_resource type="MultiMesh" id="MultiMesh_0nu6t"]
+
+[node name="MultiMeshInstance2D" type="MultiMeshInstance2D"]
+multimesh = SubResource("MultiMesh_0nu6t")
+texture = ExtResource("1_hjic7")
+script = ExtResource("2_046ha")

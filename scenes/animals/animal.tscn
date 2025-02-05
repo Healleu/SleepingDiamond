@@ -1,0 +1,71 @@
+[gd_scene load_steps=5 format=3 uid="uid://0ste0lu4sllj"]
+
+[ext_resource type="Script" uid="uid://bac6fo532r1bo" path="res://scenes/animals/animal.cs" id="1_to7qb"]
+[ext_resource type="Texture2D" uid="uid://dxrxcd6v65wvl" path="res://assets/sprites/sheep_icone.svg" id="6_mn67x"]
+[ext_resource type="Texture2D" uid="uid://ddixl8p2xmqwo" path="res://assets/sprites/male_icone.svg" id="7_c2cr3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mtbdb"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="Animal" type="Area2D"]
+script = ExtResource("1_to7qb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Panel" type="Panel" parent="UI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -243.0
+offset_top = -352.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="LabelName" type="Label" parent="UI/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Sheep"
+
+[node name="TextureRect" type="TextureRect" parent="UI/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_mn67x")
+expand_mode = 3
+
+[node name="Panel" type="Panel" parent="UI/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mtbdb")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="LabelName" type="Label" parent="UI/Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Sex"
+
+[node name="TextureRect" type="TextureRect" parent="UI/Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("7_c2cr3")
+expand_mode = 2
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

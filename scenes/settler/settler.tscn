@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cn5gtc6aog1p"]
+
+[ext_resource type="Texture2D" uid="uid://6nikp4y1csde" path="res://assets/sprites/settler.svg" id="2_s8mi0"]
+[ext_resource type="Texture2D" uid="uid://8hbbrvegweav" path="res://assets/sprites/settler_outline.svg" id="3_2soi6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w3sn3"]
+radius = 96.0
+
+[node name="Settler" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_w3sn3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_s8mi0")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_2soi6")

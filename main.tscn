@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj11xohinmu60"]
+
+[ext_resource type="PackedScene" uid="uid://bh5yphtnssrdt" path="res://scenes/menus/main/menu_main.tscn" id="1_uhkp1"]
+[ext_resource type="PackedScene" uid="uid://bo4aiu1odmf8p" path="res://PlantManager.tscn" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://cmkin2u780vky" path="res://scenes/menus/settings/menu_settings.tscn" id="3_kt3ur"]
+[ext_resource type="PackedScene" uid="uid://wtj6383or8st" path="res://scenes/menus/pause/menu_pause.tscn" id="4_7wuvh"]
+
+[node name="Main" type="Node"]
+
+[node name="MainMenu" parent="." instance=ExtResource("1_uhkp1")]
+play_scene = ExtResource("2_1bvp3")
+
+[node name="Menu" type="CanvasLayer" parent="."]
+
+[node name="MenuSettings" parent="Menu" instance=ExtResource("3_kt3ur")]
+visible = false
+
+[node name="MenuPause" parent="Menu" instance=ExtResource("4_7wuvh")]
+visible = false

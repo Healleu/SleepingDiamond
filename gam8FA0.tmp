@@ -1,0 +1,61 @@
+[gd_scene load_steps=12 format=3 uid="uid://dmcfmqdvhrk6n"]
+
+[ext_resource type="Script" path="res://camera.gd" id="2_x48jw"]
+[ext_resource type="Script" path="res://node_2d.gd" id="3_05w20"]
+[ext_resource type="Script" path="res://map.gd" id="3_dtrs7"]
+[ext_resource type="Script" path="res://LayerManager.gd" id="4_fyrss"]
+[ext_resource type="Texture2D" uid="uid://hmfodxgp3pru" path="res://assets/tilesets/first_tileset.png" id="5_qoomf"]
+[ext_resource type="Texture2D" uid="uid://d1uoh5mt35div" path="res://assets/tilesets/apple_tree_64px.svg" id="6_yy760"]
+[ext_resource type="Script" path="res://PlantManager.gd" id="7_o6ydv"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_susyq"]
+texture = ExtResource("5_qoomf")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_2v1cb"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_susyq")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m3mv4"]
+texture = ExtResource("6_yy760")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_blquk"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_m3mv4")
+
+[node name="Game" type="Node"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+limit_left = 0
+limit_top = 0
+limit_right = 6400
+limit_bottom = 6400
+limit_smoothed = true
+position_smoothing_enabled = true
+script = ExtResource("2_x48jw")
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("3_05w20")
+
+[node name="Map" type="Node2D" parent="."]
+script = ExtResource("3_dtrs7")
+
+[node name="PlantManager" type="Node" parent="Map"]
+script = ExtResource("7_o6ydv")
+
+[node name="LayerManager" type="Node2D" parent="Map"]
+script = ExtResource("4_fyrss")
+
+[node name="Layer0" type="TileMapLayer" parent="Map/LayerManager"]
+tile_set = SubResource("TileSet_2v1cb")
+
+[node name="Layer1" type="TileMapLayer" parent="Map/LayerManager"]
+tile_set = SubResource("TileSet_blquk")

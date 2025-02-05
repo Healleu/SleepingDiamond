@@ -1,0 +1,64 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${env:GODOT4}",
+            //"cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            //"port": 6005,
+            //"debugServer": 6006,
+            //"stopAtEntry": false,
+            //"args" : ["--path", "${workspaceRoot}"],
+        },
+        {
+            "name": "Launch Editor",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${env:GODOT4}",//"C:/Users/GARNIER/Downloads/Godot_v4.4-beta1_mono_win64/Godot.exe",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            //"port": 6005,
+            //"debugServer": 6006,
+            "stopAtEntry": false,
+            "args" : ["--path", "${workspaceRoot}", "--editor"],
+        },
+        {
+            "name": "Launch Scene",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${env:GODOT4}",//"C:/Users/GARNIER/Downloads/Godot_v4.4-beta1_mono_win64/Godot.exe",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "args" : [
+                "--path", 
+                "${workspaceRoot}", 
+                "${command:godot.csharp.getLaunchScene}"
+            ],
+        },
+        {
+            "name": "Debug Scene",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${env:GODOT4}",//"C:/Users/GARNIER/Downloads/Godot_v4.4-beta1_mono_win64/Godot.exe",
+            //"cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            //"port": 6005,
+            //"debugServer": 6006,
+            //"stopAtEntry": false,
+            "args" : ["--upwards", "${workspaceRoot}/scenes/animals/sheep.tscn"],
+        },
+        {
+            "name" : "Attach",
+            "type" : "coreclr",
+            "request": "attach"
+        },
+    ]
+}

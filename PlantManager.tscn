@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bo4aiu1odmf8p"]
+
+[ext_resource type="Script" uid="uid://c1ty2xuxinhwi" path="res://scenes/Test.cs" id="1_ke1si"]
+[ext_resource type="Texture2D" uid="uid://cncaxmp1vqg5q" path="res://icon.svg" id="2_qp8v7"]
+
+[node name="PlantManager" type="Node2D"]
+script = ExtResource("1_ke1si")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_qp8v7")
