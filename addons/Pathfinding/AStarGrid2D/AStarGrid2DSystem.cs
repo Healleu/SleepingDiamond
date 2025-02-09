@@ -24,9 +24,9 @@ public partial class AStarGrid2DSystem : Node
         _astar_grid.Update();
     }
 
-    public Vector2[] GetCellPath(Vector2I start, Vector2I end)
+    public List<Vector2I> GetCellPath(Vector2I start, Vector2I end)
     {
-        Vector2[] path;
+        List<Vector2I> path;
 
         // check cache
         if (_enable_cache)
@@ -37,14 +37,51 @@ public partial class AStarGrid2DSystem : Node
             {
                 return path;
             }
+            Vector2I key_reversed = GetKeyFromVector2I(end, start);
+            path = _cache.GetValueOrDefault(key_reversed, null);
+            if (path != null)
+            {
+                return path.Reversed();
+            }
         }
 
         // get path
-        path =  _astar_grid.GetPointPath(start, end);
+        path = new List<Vector2>(_astar_grid.GetPointPath(start, end));
         // save in cache
         _cache.Add(GetKeyFromVector2I(start, end), path);
 
 
+        return path;
+    }
+
+    public void ComputeCellPath(Vector2I start, Vector2I end)
+    {
+        // check cache
+        if (_enable_cache)
+        {
+            Vector2I key = GetKeyFromVector2I(start, end);
+            if (_cache.ContainsKey(key))
+            {
+                return;
+            }
+        }
+
+        // get path
+        Vector2[] path;
+        path =  _astar_grid.GetPointPath(start, end);
+
+        // save in cache
+        if (_enable_cache)
+        {
+            _cache.Add(GetKeyFromVector2I(start, end), path);
+        }
+        
+    }
+
+    public Vector2[] GetPathFromCache(Vector2I start, Vector2I end)
+    {
+        Vector2I key = GetKeyFromVector2I(start, end);
+        path = _cache.GetValueOrDefault(key, null);
         return path;
     }
 

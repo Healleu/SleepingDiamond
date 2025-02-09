@@ -8,6 +8,7 @@ public partial class IsAt : BTLeaf
     {
         _position = position;
     }
+    
     public override BTStatus Tick(double delta, object actor, Blackboard blackboard)
     {
         if (((Entity2D)actor).GetPosition() == _position)

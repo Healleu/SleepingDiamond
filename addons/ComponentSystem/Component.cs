@@ -37,6 +37,10 @@ public abstract partial class Component : RefCounted
 	{
 		_entity = entity;
 		_update_period = update_period;
+		if (_entity == null)
+		{
+			_enable = false;
+		}
 	}
 
 	public void set_enable(bool enable)
