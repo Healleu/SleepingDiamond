@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 
 public partial class AStarGrid2DSystem : Node
@@ -7,7 +8,12 @@ public partial class AStarGrid2DSystem : Node
 
     private bool _enable_cache = false;
     private AStarGrid2D _astar_grid = new AStarGrid2D();
-    private Dictionary<Vector2I, Vector2[]> _cache = new Dictionary<Vector2I, Vector2[]>();
+    private Dictionary<Vector2I, List<Vector2>> _cache = new Dictionary<Vector2I, List<Vector2>>();
+
+    public void Test()
+    {
+        GD.Print("Ici");
+    }
 
     public void setup(Rect2I region, Vector2I cell_size, AStarGrid2D.DiagonalModeEnum diagonal_mode = AStarGrid2D.DiagonalModeEnum.Always)
     {
@@ -24,9 +30,9 @@ public partial class AStarGrid2DSystem : Node
         _astar_grid.Update();
     }
 
-    public List<Vector2I> GetCellPath(Vector2I start, Vector2I end)
+    public List<Vector2> GetCellPath(Vector2I start, Vector2I end)
     {
-        List<Vector2I> path;
+        List<Vector2> path;
 
         // check cache
         if (_enable_cache)
@@ -41,12 +47,14 @@ public partial class AStarGrid2DSystem : Node
             path = _cache.GetValueOrDefault(key_reversed, null);
             if (path != null)
             {
-                return path.Reversed();
+                List<Vector2> reversed_path = new List<Vector2>(path);
+                reversed_path.Reverse();
+                return reversed_path;
             }
         }
 
         // get path
-        path = new List<Vector2>(_astar_grid.GetPointPath(start, end));
+        path = _astar_grid.GetPointPath(start, end).ToList();
         // save in cache
         _cache.Add(GetKeyFromVector2I(start, end), path);
 
@@ -67,8 +75,8 @@ public partial class AStarGrid2DSystem : Node
         }
 
         // get path
-        Vector2[] path;
-        path =  _astar_grid.GetPointPath(start, end);
+        List<Vector2> path;
+        path = _astar_grid.GetPointPath(start, end).ToList();
 
         // save in cache
         if (_enable_cache)
@@ -78,11 +86,10 @@ public partial class AStarGrid2DSystem : Node
         
     }
 
-    public Vector2[] GetPathFromCache(Vector2I start, Vector2I end)
+    public List<Vector2> GetPathFromCache(Vector2I start, Vector2I end)
     {
         Vector2I key = GetKeyFromVector2I(start, end);
-        path = _cache.GetValueOrDefault(key, null);
-        return path;
+        return _cache.GetValueOrDefault(key, null);
     }
 
     private Vector2I GetKeyFromVector2I(Vector2I start, Vector2I end)

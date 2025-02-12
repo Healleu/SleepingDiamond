@@ -44,7 +44,6 @@ public partial class PlantManager : Node
         GD.Print("");
         Entity ent = new Entity();
         GD.Print(ent.GetClass());
-        AddChild(ent);
     }
 
     public bool AddPlant(Transform2D transform, Plant.Type type)

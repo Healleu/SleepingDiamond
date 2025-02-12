@@ -14,3 +14,45 @@ UI Button :
 	- Hunt
 	- Deconstruct
 	- Cancel
+
+
+Salutations,
+J'ai un bout de code qui me permet de parcourir un chemin à travers une liste, actuellement hors cas particulier, il met 10-14us à s'exécuter.
+Je cherche à réduire son temps d'exécution par simple curiosité puisque évidemment : "Premature optimization really the root of all evil".
+```
+    protected override void _Process(double delta){
+        if(_is_moving) 
+        {
+            // If at Waypoint then go next
+            Vector2 position = _entity.GetPosition();
+            if(_next_waypoint.DistanceSquaredTo(position) <= _threshold_squared)
+            {
+                _path.RemoveAt(0);
+                if(_path.Any())
+                {
+                    _next_waypoint = _path[0];
+                }
+                else 
+                {
+                    _entity.SetPosition(_next_waypoint);
+                    _is_moving = false;
+                    _path = null;
+                    return;
+                }
+            }
+
+            // Move to Waypoint
+            Vector2 direction = (_next_waypoint - position).Normalized();
+            Vector2 movement = direction * _velocity_max * (float)delta;
+            if(movement.Length() > _next_waypoint.DistanceSquaredTo(position))
+            {
+                _entity.SetPosition(_next_waypoint);
+            }
+            else 
+            {
+                _entity.SetPosition(_entity.GetPosition() + movement);
+            }
+        }
+    }
+```
+En gros :

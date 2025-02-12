@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcb7yo0udwwhb"]
+
+[ext_resource type="Script" uid="uid://c1ty2xuxinhwi" path="res://scenes/Test.cs" id="1_37kl0"]
+[ext_resource type="Script" uid="uid://c66b4tkgljdkt" path="res://mousetest.gd" id="2_8uh7m"]
+
+[node name="Test" type="Node2D"]
+script = ExtResource("1_37kl0")
+
+[node name="mousetest" type="Node2D" parent="."]
+script = ExtResource("2_8uh7m")

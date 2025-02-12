@@ -1,21 +1,15 @@
+using System;
 using Godot;
 
-public abstract partial class Component : RefCounted
+public abstract partial class Component : Composition
 {
-	public enum ProcessType : byte
-	{
-		UNUSED, // Don't use updates
-		IDLE, // Updates on rendered frame.
-		PHYSICS, // Updates synchornized with physics thread. 
-	}
+
 	protected string _name = "Undefined";
 	protected Entity _entity = null;
 	protected bool _enable = true;
 	protected ProcessType _process_type = ProcessType.IDLE;
 	protected double _update_period = 1.0f;
 	protected double _elapsed_time = 0.0f;
-
-	public virtual void Setup() { }
 
 	public void Update(double delta)
 	{
@@ -53,9 +47,9 @@ public abstract partial class Component : RefCounted
 		return _entity;
 	}
 
-	public new virtual string GetClass()
+	public override Type GetClass()
 	{
-		return "Component";
+		return typeof(Component);
 	}
 
 	public ProcessType GetProcessType()
@@ -63,9 +57,6 @@ public abstract partial class Component : RefCounted
 		return _process_type;
 	}
 
-	public string GetName()
-	{
-		return _name;
-	}
+	public override void CleanUp() { }
 
 }

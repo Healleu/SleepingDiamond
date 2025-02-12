@@ -1,18 +1,20 @@
 [gd_scene load_steps=5 format=3 uid="uid://0ste0lu4sllj"]
 
-[ext_resource type="Script" uid="uid://bac6fo532r1bo" path="res://scenes/animals/animal.cs" id="1_to7qb"]
+[ext_resource type="Script" uid="uid://bac6fo532r1bo" path="res://scenes/animals/Animal.cs" id="1_to7qb"]
 [ext_resource type="Texture2D" uid="uid://dxrxcd6v65wvl" path="res://assets/sprites/sheep_icone.svg" id="6_mn67x"]
 [ext_resource type="Texture2D" uid="uid://ddixl8p2xmqwo" path="res://assets/sprites/male_icone.svg" id="7_c2cr3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mtbdb"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="Animal" type="Area2D"]
+[node name="Animal" type="CharacterBody2D"]
 script = ExtResource("1_to7qb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 
 [node name="UI" type="CanvasLayer" parent="."]
 visible = false
@@ -67,5 +69,3 @@ text = "Sex"
 layout_mode = 2
 texture = ExtResource("7_c2cr3")
 expand_mode = 2
-
-[connection signal="input_event" from="." to="." method="_on_input_event"]

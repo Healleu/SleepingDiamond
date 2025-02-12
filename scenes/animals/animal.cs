@@ -1,3 +1,5 @@
+using Godot;
+
 public partial class Animal : Entity2D
 {
     public enum SexeState : byte {
@@ -13,4 +15,15 @@ public partial class Animal : Entity2D
     protected byte _food = 100;
     protected byte _sleep = 100;
     protected bool _can_reproduce = false;
+
+    public SexeState GetSexe()
+    {
+        return _sexe;
+    }
+
+    public bool CanReproduce()
+    {
+        return _can_reproduce;
+    }
+
 }

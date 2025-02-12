@@ -1,18 +1,17 @@
 [gd_scene load_steps=5 format=3 uid="uid://clw03ruik57wd"]
 
 [ext_resource type="PackedScene" uid="uid://0ste0lu4sllj" path="res://scenes/animals/animal.tscn" id="1_8cftm"]
-[ext_resource type="Script" uid="uid://tus1u3rhj1vv" path="res://scenes/animals/sheep.cs" id="2_ag106"]
+[ext_resource type="Script" uid="uid://tus1u3rhj1vv" path="res://scenes/animals/Sheep.cs" id="2_ag106"]
 [ext_resource type="Texture2D" uid="uid://b66fyutd4s68n" path="res://assets/sprites/sheep.svg" id="2_hnfey"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_014cp"]
-size = Vector2(192, 128)
+[sub_resource type="CircleShape2D" id="CircleShape2D_ag106"]
+radius = 97.1288
 
 [node name="Sheep" instance=ExtResource("1_8cftm")]
 script = ExtResource("2_ag106")
 
 [node name="CollisionShape2D" parent="." index="0"]
-shape = SubResource("RectangleShape2D_014cp")
+shape = SubResource("CircleShape2D_ag106")
 
-[node name="Sprite2D" parent="." index="1"]
-rotation = 3.14159
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
 texture = ExtResource("2_hnfey")
