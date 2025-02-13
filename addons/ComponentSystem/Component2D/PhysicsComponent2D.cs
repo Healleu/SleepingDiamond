@@ -1,74 +1,101 @@
-using System;
 using Godot;
 
-public partial class PhysicsComponent2D : Component2D
+public abstract partial class PhysicsComponent2D : Component2D
 {
-    private Rid _area;
-    private Rid _shape;
-    private Node2D mynode = null;
+    protected bool _visible_collision_shapes = false;
+    protected Rid _collision_object;
+    protected Rid _shape;
+    protected Node2D _parent = null;
+    protected Rid _canvas_item;
+    protected Vector2 _offset = Vector2.Zero;
 
-    public PhysicsComponent2D(Entity2D entity, double update_period, Node2D node) : base(entity, update_period)
+    protected string _shape_type = new string(' ', 9);
+
+    public PhysicsComponent2D(Entity2D entity, double update_period, Node2D parent, bool visible_collision_shapes = true) : base(entity, update_period)
     {
-        /*
-        // Create the body.
-        _area = PhysicsServer2D.BodyCreate();
-        PhysicsServer2D.BodySetMode(_area, PhysicsServer2D.BodyMode.Rigid);
-        // Add a shape.
-        _shape = PhysicsServer2D.RectangleShapeCreate();
-        // Set rectangle extents.
-        PhysicsServer2D.ShapeSetData(_shape, new Vector2(100, 100));
-        // Make sure to keep the shape reference!
-        PhysicsServer2D.BodyAddShape(_area, _shape);
-        // Set space, so it collides in the same space as current scene.
-        PhysicsServer2D.BodySetSpace(_area, node.GetWorld2D().Space);
-        // Move initial position.
-        PhysicsServer2D.BodySetState(_area, PhysicsServer2D.BodyState.Transform, entity.GetTransform2D());
-        PhysicsServer2D.BodySetCollisionMask(_area, 1);
-        PhysicsServer2D.BodySetCollisionLayer(_area, 1);
-        
-        */
-        mynode = node;
-        _shape = PhysicsServer2D.CircleShapeCreate();
-        _area = PhysicsServer2D.AreaCreate();
-        PhysicsServer2D.ShapeSetData(_shape, 32);
-        PhysicsServer2D.AreaAddShape(_area, _shape);
-        PhysicsServer2D.AreaSetSpace(_area, node.GetWorld2D().Space);
-        PhysicsServer2D.AreaSetMonitorable(_area, true);
-        PhysicsServer2D.AreaAttachObjectInstanceId(_area, entity.GetInstanceId());
-        //PhysicsServer2D.AreaInt
-        //PhysicsServer2D.AreaAttachCanvasInstanceId
+        _parent = parent;
+        _visible_collision_shapes = visible_collision_shapes;
     }
 
-    public void SetTransform(Transform2D transform)
+    public virtual void SetTransform(Transform2D transform)
     {
-        PhysicsServer2D.AreaSetTransform(_area, transform);
-        mynode.QueueRedraw();
+        if (_canvas_item.IsValid)
+        {
+            RenderingServer.CanvasItemSetTransform(_canvas_item, transform);
+        }
+
     }
 
-    public Transform2D GetTransform()
+    public abstract Transform2D GetTransform();
+
+    public abstract Variant GetShapeData();
+
+    public void SetCircleShape(float radius)
     {
-        return PhysicsServer2D.AreaGetTransform(_area);
+        if (_shape.IsValid)
+        {
+            PhysicsServer2D.FreeRid(_shape);
+        }
+        if (_collision_object.IsValid)
+        {
+            _shape = PhysicsServer2D.CircleShapeCreate();
+            PhysicsServer2D.ShapeSetData(_shape, radius);
+            PhysicsServer2D.AreaAddShape(_collision_object, _shape);
+            _shape_type = "circle";
+            if (_visible_collision_shapes)
+            {
+                _canvas_item = RenderingServer.CanvasItemCreate();
+                RenderingServer.CanvasItemSetParent(_canvas_item, _parent.GetCanvasItem());
+                RenderingServer.CanvasItemAddCircle(_canvas_item, Vector2.Zero, radius, (Color)ProjectSettings.GetSetting("debug/shapes/collision/shape_color"));
+                RenderingServer.CanvasItemSetTransform(_canvas_item, _entity.GetTransform2D());
+                RenderingServer.CanvasItemSetDrawIndex(_canvas_item, int.MaxValue);
+            }
+        }
     }
 
-    public Variant GetShapeData()
+    public void SetRectangleShape(Vector2 rect_size)
     {
-        return PhysicsServer2D.ShapeGetData(_shape);
+        if (_shape.IsValid)
+        {
+            PhysicsServer2D.FreeRid(_shape);
+        }
+        if (_collision_object.IsValid)
+        {
+            //_offset = -rect_size / 2;
+            _shape = PhysicsServer2D.RectangleShapeCreate();
+            PhysicsServer2D.ShapeSetData(_shape, rect_size / 2);
+            PhysicsServer2D.AreaAddShape(_collision_object, _shape);
+            //PhysicsServer2D.AreaSetTransform(_collision_object, Transform2D.Identity);
+            _shape_type = "rectangle";
+            if (_visible_collision_shapes)
+            {
+                _canvas_item = RenderingServer.CanvasItemCreate();
+                RenderingServer.CanvasItemSetParent(_canvas_item, _parent.GetCanvasItem());
+                RenderingServer.CanvasItemAddRect(_canvas_item, new Rect2(-rect_size / 2, rect_size), (Color)ProjectSettings.GetSetting("debug/shapes/collision/shape_color"));
+                RenderingServer.CanvasItemSetTransform(_canvas_item, _entity.GetTransform2D());
+                RenderingServer.CanvasItemSetDrawIndex(_canvas_item, int.MaxValue);
+            }
+
+
+        }
+        //_parent.QueueRedraw();
     }
 
     public override void CleanUp()
     {
         base.CleanUp();
-        PhysicsServer2D.FreeRid(_area);
-        PhysicsServer2D.FreeRid(_shape);
+        if (_canvas_item.IsValid)
+        {
+            RenderingServer.FreeRid(_canvas_item);
+        }
+        //if(_collision_object.IsValid)
+        //{
+        //    PhysicsServer2D.FreeRid(_collision_object);
+        //}
+        //if(_shape.IsValid)
+        //{
+        //    PhysicsServer2D.FreeRid(_shape);
+        //}
     }
 
-    public void Draw()
-    {
-        mynode.DrawCircle(GetTransform().Origin, (float)GetShapeData(), (Color)ProjectSettings.GetSetting("debug/shapes/collision/shape_color"));
-    }
-
-    public override Type GetClass()
-    {
-        return typeof(PhysicsComponent2D);
-    }
 }
