@@ -1,6 +1,4 @@
 using Godot;
-using System;
-
 
 public abstract partial class Composition : Resource
 {
@@ -11,12 +9,12 @@ public abstract partial class Composition : Resource
 		PHYSICS, // Updates synchornized with physics thread. 
 	}
 
-	public new virtual Type GetClass()
-	{
-		return typeof(Composition);
-	}
-
 	public virtual void Setup() { }
+
+	public new string GetClass()
+	{
+		return GetType().Name;
+	}
 
 	public virtual void CleanUp()
 	{

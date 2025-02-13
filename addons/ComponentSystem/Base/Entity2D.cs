@@ -1,12 +1,14 @@
 using System;
+using System.Linq;
 using Godot;
 
 public partial class Entity2D : Entity
 {
-    protected Transform2D transform = Transform2D.Identity;
+    string[] PHYSICS_COMPONENT = { "PhysicsComponent2D", "AreaPhysicsComponent2D" };
+    protected Transform2D _transform = Transform2D.Identity;
 
-    protected PhysicsComponent2D physicsComponent2D = null;
-    protected RenderingComponent2D renderingComponent2D = null;
+    protected PhysicsComponent2D _physicsComponent2D = null;
+    protected RenderingComponent2D _renderingComponent2D = null;
 
     public override void Setup()
     {
@@ -15,13 +17,13 @@ public partial class Entity2D : Entity
         foreach (var component in _components)
         {
             component.Setup();
-            if (component.GetClass() == typeof(PhysicsComponent2D))
+            if (PHYSICS_COMPONENT.Contains(component.GetClass()))
             {
-                physicsComponent2D = component as PhysicsComponent2D;
+                _physicsComponent2D = component as PhysicsComponent2D;
             }
-            if (component.GetClass() == typeof(RenderingComponent2D))
+            if (component.GetClass() == "RenderingComponent2D")
             {
-                renderingComponent2D = component as RenderingComponent2D;
+                _renderingComponent2D = component as RenderingComponent2D;
             }
             if (component.GetProcessType() == ProcessType.IDLE)
             {
@@ -36,42 +38,56 @@ public partial class Entity2D : Entity
 
     public Transform2D GetTransform2D()
     {
-        return transform;
+        return _transform;
     }
 
     public void SetTransform2D(Transform2D transform)
     {
-        this.transform = transform;
-        if (physicsComponent2D != null)
+        //GD.Print(transform);
+        _transform = transform;
+        if (_physicsComponent2D != null)
         {
-            physicsComponent2D.SetTransform(transform);
+            _physicsComponent2D.SetTransform(transform);
         }
-        if (renderingComponent2D != null)
+        if (_renderingComponent2D != null)
         {
-            renderingComponent2D.SetTransform(transform);
+            _renderingComponent2D.SetTransform(transform);
         }
     }
 
     public Vector2 GetPosition()
     {
-        return transform.Origin;
+        return _transform.Origin;
     }
 
     public void SetPosition(Vector2 position)
     {
-        transform.Origin = position;
-        if (physicsComponent2D != null)
+        _transform.Origin = position;
+        if (_physicsComponent2D != null)
         {
-            physicsComponent2D.SetTransform(transform);
+            _physicsComponent2D.SetTransform(_transform);
         }
-        if (renderingComponent2D != null)
+        if (_renderingComponent2D != null)
         {
-            renderingComponent2D.SetTransform(transform);
+            _renderingComponent2D.SetTransform(_transform);
         }
     }
 
-    public override Type GetClass()
+    public float GetRotation()
     {
-        return typeof(Entity2D);
+        return _transform.Rotation;
+    }
+
+    public void SetRotation(float rotation)
+    {
+        _transform = new Transform2D(rotation, _transform.Origin);
+        if (_physicsComponent2D != null)
+        {
+            _physicsComponent2D.SetTransform(_transform);
+        }
+        if (_renderingComponent2D != null)
+        {
+            _renderingComponent2D.SetTransform(_transform);
+        }
     }
 }

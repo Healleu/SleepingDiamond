@@ -1,6 +1,5 @@
-using System;
 
-public partial class Component2D : Component
+public abstract partial class Component2D : Component
 {
     protected new Entity2D _entity = null;
 
@@ -18,8 +17,4 @@ public partial class Component2D : Component
         return _entity;
     }
 
-    public override Type GetClass()
-    {
-        return typeof(Component2D);
-    }
 }

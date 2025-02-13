@@ -1,5 +1,3 @@
-using System;
-using Godot;
 
 public abstract partial class Component : Composition
 {
@@ -45,11 +43,6 @@ public abstract partial class Component : Composition
 	public virtual Entity GetEntity()
 	{
 		return _entity;
-	}
-
-	public override Type GetClass()
-	{
-		return typeof(Component);
 	}
 
 	public ProcessType GetProcessType()

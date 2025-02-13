@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
-using System;
-using System.Linq;
 using Godot;
 
 public partial class Test : Node2D
@@ -10,16 +7,14 @@ public partial class Test : Node2D
 	private List<Entity> _entities = new List<Entity>();
 	public override void _Ready()
 	{
-		//sprite2D = (Sprite2D)GetChild(0);
 		Entity ent = SpecificEntity();
 		_entities.Add(ent);
-		//AddChild(ent);
 	}
 
 	public override void _Process(double delta)
 	{
 		//ulong start = Time.GetTicksUsec();
-		//base._Process(delta);
+		base._Process(delta);
 		foreach (Entity2D entity in _entities)
 		{
 			entity.Update(delta);
@@ -30,14 +25,13 @@ public partial class Test : Node2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		ulong start = Time.GetTicksUsec();
-		//base._PhysicsProcess(delta);
+		//ulong start = Time.GetTicksUsec();
+		base._PhysicsProcess(delta);
 		foreach (Entity2D entity in _entities)
 		{
 			entity.UpdatePhysics(delta);
-			//	sprite2D.GlobalPosition = entity.GetPosition();
 		}
-		GD.Print(Time.GetTicksUsec() - start);
+		//GD.Print(Time.GetTicksUsec() - start);
 	}
 
 	public override void _ExitTree()
@@ -60,27 +54,15 @@ public partial class Test : Node2D
 		bt.AddEntryPoint(isat);
 		entity.AddComponent(motion);
 		entity.AddComponent(ai);
-		//entity.SetPosition(new Vector2(50, 50));
-		RenderingComponent2D rend = new RenderingComponent2D(entity, 0.0, this);
+		RenderingComponent2D rend = new RenderingComponent2D(entity, 0.0, this, "res://assets/sprites/sheep.svg");
 		entity.AddComponent(rend);
-		PhysicsComponent2D ph = new PhysicsComponent2D(entity, 0.0, this);
+		AreaPhysicsComponent2D ph = new AreaPhysicsComponent2D(entity, 0.0, this, GetTree().DebugCollisionsHint);
+		ph.SetRectangleShape(new Vector2(192, 128));
 		entity.AddComponent(ph);
 		entity.Setup();
+		//entity.SetPosition(new Vector2(200,200));
 		return entity;
 	}
 
-	public override void _Draw()
-	{
-		foreach (Entity2D entity in _entities)
-		{
-			if (entity.HasComponentByClass(typeof(PhysicsComponent2D)))
-			{
-				((PhysicsComponent2D)entity.GetComponentByClass(typeof(PhysicsComponent2D))).Draw();
-				//GD.Print("ici");
-				//PhysicsComponent2D component = (PhysicsComponent2D)entity.GetComponentByClass("PhysicsComponent2D");
-				//DrawCircle(component.GetTransform().Origin, (float)component.GetShapeData(), (Color)ProjectSettings.GetSetting("debug/shapes/collision/shape_color"));
-			}
-		}
-	}
 }
 

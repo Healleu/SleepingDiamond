@@ -35,15 +35,12 @@ func _input(event: InputEvent) -> void:
 func mouse_detect():
 	var space = get_world_2d().get_direct_space_state()
 	var mousePos = get_global_mouse_position()
-	var a: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	var a: PhysicsPointQueryParameters2D = PhysicsPointQueryParameters2D.new()
 	a.collide_with_areas = true
 	a.collide_with_bodies = true
 	a.collision_mask = 1
-	a.transform = Transform2D(1.0, mousePos)
-	var shape = CircleShape2D.new()
-	shape.radius = 1
-	a.shape = shape
-	print(space.intersect_shape(a))
+	a.position = mousePos
+	print(space.intersect_point(a))
 
 func _draw() -> void:
 	for i in range(_areas.size()):

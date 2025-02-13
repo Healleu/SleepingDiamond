@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 public partial class Entity : Composition
@@ -54,11 +53,11 @@ public partial class Entity : Composition
 		}
 		return false;
 	}
-	public bool HasComponentByClass(Type component_class)
+	public bool HasComponentByType(string component_type)
 	{
 		foreach (var component in _components)
 		{
-			if (component.GetClass() == component_class)
+			if (component.GetType().ToString() == component_type)
 				return true;
 		}
 		return false;
@@ -74,11 +73,11 @@ public partial class Entity : Composition
 		return null;
 	}
 
-	public Component GetComponentByClass(Type component_class)
+	public Component GetComponentByType(string component_type)
 	{
 		foreach (var component in _components)
 		{
-			if (component.GetClass() == component_class)
+			if (component.GetType().ToString() == component_type)
 				return component;
 		}
 		return null;
@@ -96,18 +95,13 @@ public partial class Entity : Composition
 		Setup();
 	}
 
-	public override Type GetClass()
-	{
-		return typeof(Entity);
-	}
-
 	public override void CleanUp()
 	{
 		foreach (var component in _components)
 		{
 			component.CleanUp();
 		}
-		Free();
+		//Free();
 	}
 
 }

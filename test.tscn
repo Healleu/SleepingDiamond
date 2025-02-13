@@ -4,7 +4,10 @@
 [ext_resource type="Script" uid="uid://c66b4tkgljdkt" path="res://mousetest.gd" id="2_8uh7m"]
 
 [node name="Test" type="Node2D"]
+top_level = true
 script = ExtResource("1_37kl0")
 
 [node name="mousetest" type="Node2D" parent="."]
+rotation = -0.785398
+scale = Vector2(5, 5)
 script = ExtResource("2_8uh7m")
